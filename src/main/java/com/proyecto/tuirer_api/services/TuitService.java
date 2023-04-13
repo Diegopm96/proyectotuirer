@@ -2,20 +2,19 @@ package com.proyecto.tuirer_api.services;
 
 import java.util.List;
 
-
-
+import com.proyecto.tuirer_api.dtos.TuitDTO;
 import com.proyecto.tuirer_api.models.Tuit;
 
 
 public interface TuitService {
 	
-	public List<Tuit> obtenerTodosTuits();
+	public List<TuitDTO> obtenerTodosTuits();
 	
-	public List<Tuit> obtenerTuitsUsuario(int id);
+	public List<TuitDTO> obtenerTuitsUsuario(int id);
 
 	public List<Tuit> obtenerTuits(int id) ;
 	
-	public Tuit guardar(Tuit tuit);
+	public TuitDTO guardar(TuitDTO tuit);
 	
 	public void eliminarTuit(int id);
 }
