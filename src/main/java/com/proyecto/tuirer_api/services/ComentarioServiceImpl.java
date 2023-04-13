@@ -1,12 +1,16 @@
 package com.proyecto.tuirer_api.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proyecto.tuirer_api.dtos.ComentarioDTO;
 import com.proyecto.tuirer_api.models.Comentario;
 import com.proyecto.tuirer_api.repositories.ComentarioRepository;
+import com.proyecto.tuirer_api.utils.ModelMapperUtil;
 
 @Service
 public class ComentarioServiceImpl implements ComentarioService {
@@ -15,22 +19,45 @@ public class ComentarioServiceImpl implements ComentarioService {
 	ComentarioRepository comentarioRepository;
 
 	@Override
-	public List<Comentario> obtenerComentarios() {
+	public List<ComentarioDTO> obtenerComentarios() {
+		List<Comentario> comentarios = comentarioRepository.findAll();
+		List<ComentarioDTO> comentariosDTO = new ArrayList<>();
+		if (!comentarios.isEmpty()) {
 
-		return this.comentarioRepository.findAll();
+			comentariosDTO = ModelMapperUtil.transformDtoList(comentarios, ComentarioDTO.class);
+		}
+
+		return comentariosDTO;
 	}
 
 	@Override
-	public Comentario guardar(Comentario comentario) {
+	public ComentarioDTO guardar(ComentarioDTO comentario) {
 
-		return this.comentarioRepository.save(comentario);
+		Comentario comentarioEnti = ModelMapperUtil.transformDto(comentario, Comentario.class);
+
+		return ModelMapperUtil.transformDto(comentarioRepository.save(comentarioEnti), ComentarioDTO.class);
 	}
 
 	@Override
 	public void eliminar(int id) {
 
-		this.comentarioRepository.deleteById(id);
+		comentarioRepository.deleteById(id);
 
+	}
+
+	@Override
+	public ComentarioDTO obtenerComentarioPorId(int id) {
+
+		Optional<Comentario> comentario = comentarioRepository.findById(id);
+		ComentarioDTO comentarioDTO = new ComentarioDTO();
+		if (comentario.isPresent()) {
+
+			comentarioDTO = ModelMapperUtil.transformDto(comentario.get(), ComentarioDTO.class);
+
+		} else {
+			return null;
+		}
+		return comentarioDTO;
 	}
 
 }

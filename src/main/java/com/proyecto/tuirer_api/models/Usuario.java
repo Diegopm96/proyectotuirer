@@ -2,11 +2,15 @@ package com.proyecto.tuirer_api.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,9 +34,10 @@ public class Usuario implements Serializable {
 	private String password;
 
 	@Column(name = "FECHA_REGISTRO")
-	private Date FechaRegistro;
+	private Date fechaRegistro;
 
-	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Tuit> tuits;
 	
 	
 	public Usuario() {
@@ -45,6 +50,14 @@ public class Usuario implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<Tuit> getTuits() {
+		return tuits;
+	}
+
+	public void setTuits(List<Tuit> tuits) {
+		this.tuits = tuits;
 	}
 
 	public String getEmail() {
@@ -72,11 +85,11 @@ public class Usuario implements Serializable {
 	}
 
 	public Date getFechaRegistro() {
-		return FechaRegistro;
+		return fechaRegistro;
 	}
 
 	public void setFechaRegistro(Date fechaRegistro) {
-		FechaRegistro = fechaRegistro;
+		this.fechaRegistro = fechaRegistro;
 	}
 
 	public static long getSerialversionuid() {

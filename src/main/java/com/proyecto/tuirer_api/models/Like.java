@@ -7,50 +7,54 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Likes", catalog="proyecto_tuirer")
-public class Like implements Serializable{
+@Table(name = "Likes", catalog = "proyecto_tuirer")
+public class Like implements Serializable {
 
-	
 	private static final long serialVersionUID = -5764556820340419660L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_LIKE", unique = true, nullable = false)
-	private int idLike;
-	
-	@Column(name="ID_TUIT_COMENTARIO")
-	private int idComentarioTuit;
-	
-	@Column(name="FLAG_LIKE")
+	private int id;
+
+	@ManyToOne
+	@JoinColumn(name = "ID_TUIT", nullable = true)
+//	private int idTuit;
+	private Tuit tuit;
+
+	@Column(name = "FLAG_LIKE")
 	private boolean flagLike;
-	
-	@Column(name="FLAG_TUIT_COMENTARIO")
-	private boolean flagTuitComentario;
-	
-	@Column(name="ID_USUARIO")
+
+	@ManyToOne
+	@JoinColumn(name = "ID_COMENTARIO", nullable = true)
+	private Comentario comentario;
+
+	@Column(name = "ID_USUARIO")
 	private int idUsuario;
-	
-	public Like () {
-		
+
+	public Like() {
+
 	}
 
-	public int getIdLike() {
-		return idLike;
+	public int getId() {
+		return id;
 	}
 
-	public void setIdLike(int idLike) {
-		this.idLike = idLike;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getIdComentario() {
-		return idComentarioTuit;
+	public Tuit getTuit() {
+		return tuit;
 	}
 
-	public void setIdComentario(int idComentario) {
-		this.idComentarioTuit = idComentario;
+	public void setTuit(Tuit tuit) {
+		this.tuit = tuit;
 	}
 
 	public boolean isFlagLike() {
@@ -61,12 +65,12 @@ public class Like implements Serializable{
 		this.flagLike = flagLike;
 	}
 
-	public boolean isFlagTuitComentario() {
-		return flagTuitComentario;
+	public Comentario getComentario() {
+		return comentario;
 	}
 
-	public void setFlagTuitComentario(boolean flagTuitComentario) {
-		this.flagTuitComentario = flagTuitComentario;
+	public void setComentario(Comentario comentario) {
+		this.comentario = comentario;
 	}
 
 	public int getIdUsuario() {
@@ -76,11 +80,5 @@ public class Like implements Serializable{
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	
 
 }

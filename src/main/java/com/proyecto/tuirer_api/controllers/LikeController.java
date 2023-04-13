@@ -1,6 +1,7 @@
 package com.proyecto.tuirer_api.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyecto.tuirer_api.dtos.LikeDTO;
+import com.proyecto.tuirer_api.dtos.LikeDTOSimp;
+import com.proyecto.tuirer_api.models.Comentario;
 import com.proyecto.tuirer_api.models.Like;
 import com.proyecto.tuirer_api.services.LikeServiceImpl;
+import com.proyecto.tuirer_api.utils.ModelMapperUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -24,20 +29,21 @@ public class LikeController {
 	LikeServiceImpl likeService;
 
 	@GetMapping("/like/{idLike}")
-	public Like obtenerLikeId(@PathVariable int idLike) {
+	public LikeDTO obtenerLikeId(@PathVariable int idLike) {
 
 		return this.likeService.obtenerLikePorId(idLike);
 	}
 
 	@PostMapping("/like")
-	public ResponseEntity<Like> guardarLike(@RequestBody Like like) {
+	public ResponseEntity<LikeDTOSimp> guardarLike(@RequestBody LikeDTO like) {
 
+		
 		Like nuevoLike = this.likeService.guardarLike(like);
 
-		return new ResponseEntity<>(nuevoLike, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(ModelMapperUtil.transformDto(nuevoLike, LikeDTOSimp.class), HttpStatus.ACCEPTED);
 	}
 
-		@DeleteMapping("/like/{id}")
+	@DeleteMapping("/like/{id}")
 	public ResponseEntity<HashMap<String, Boolean>> eliminarLike(@RequestBody int id) {
 
 		this.likeService.eliminarLike(id);
@@ -49,4 +55,23 @@ public class LikeController {
 		return new ResponseEntity<>(estadoLikeEliminado, HttpStatus.ACCEPTED);
 
 	}
+	
+	@GetMapping("/likes/comentario/{id}")
+	public List<Like> obtenerLikesComentario(@PathVariable("id") Comentario	 id) {
+
+		return likeService.obtenerLikeIdComentario(id);
+
+	}
+
+	
+//	hacer metodos pasandole el objeto 
+	
+	@GetMapping("/likes/tuit/{}")
+	public List<Like> obtenerLikesTuit(@PathVariable int id) {
+
+		return this.obtenerLikesTuit(id);
+
+	}
+	
+	
 }

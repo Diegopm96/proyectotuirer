@@ -1,13 +1,19 @@
 package com.proyecto.tuirer_api.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,12 +33,14 @@ public class Tuit implements Serializable {
 	@Column(name = "FECHA_PUBLICACION")
 	private Date fechaPublicacion;
 
-	
-	@Column(name = "ID_USUARIO")
-	private int idUsuario;
+//	@Column(name = "ID_USUARIO")
+	@ManyToOne()
+	@JoinColumn(name="ID_USUARIO")
+	private Usuario usuario;
 
-	
-	
+	@OneToMany(mappedBy = "tuit", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Like> likes = new ArrayList<>();
+
 	public Tuit() {
 	}
 
@@ -60,12 +68,12 @@ public class Tuit implements Serializable {
 		this.fechaPublicacion = fechaPublicacion;
 	}
 
-	public int getIdUsuario() {
-		return idUsuario;
+	public Usuario getIdUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setIdUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public static long getSerialversionuid() {

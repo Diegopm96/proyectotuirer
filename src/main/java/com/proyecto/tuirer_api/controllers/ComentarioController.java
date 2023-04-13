@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.tuirer_api.models.Comentario;
+import com.proyecto.tuirer_api.dtos.ComentarioDTO;
 import com.proyecto.tuirer_api.services.ComentarioServiceImpl;
 
 @RestController
@@ -25,15 +25,15 @@ public class ComentarioController {
 	ComentarioServiceImpl comentarioService;
 
 	@GetMapping("/comentarios")
-	public List<Comentario> obtenerComentarios() {
+	public List<ComentarioDTO> obtenerComentarios() {
 
 		return comentarioService.obtenerComentarios();
 	}
 
 	@PostMapping("/comentario")
-	public ResponseEntity<Comentario> guardar(@RequestBody Comentario comentario) {
+	public ResponseEntity<ComentarioDTO> guardar(@RequestBody ComentarioDTO comentario) {
 
-		Comentario nuevoComentario = this.comentarioService.guardar(comentario);
+		ComentarioDTO nuevoComentario = this.comentarioService.guardar(comentario);
 
 		return new ResponseEntity<>(nuevoComentario, HttpStatus.ACCEPTED);
 
@@ -49,4 +49,12 @@ public class ComentarioController {
 
 		return new ResponseEntity<>(estadoComentarioEliminado, HttpStatus.ACCEPTED);
 	}
+
+	@GetMapping("/comentario/{id}")
+	public ComentarioDTO obtenerComentarioId(@PathVariable int id) {
+
+		return comentarioService.obtenerComentarioPorId(id);
+
+	}
+
 }

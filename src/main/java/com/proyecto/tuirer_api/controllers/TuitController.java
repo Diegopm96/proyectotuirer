@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto.tuirer_api.models.Tuit;
+import com.proyecto.tuirer_api.dtos.TuitDTO;
 import com.proyecto.tuirer_api.services.TuitServiceImpl;
 
 @RestController
@@ -25,15 +25,15 @@ public class TuitController {
 	TuitServiceImpl tuitService;
 
 	@GetMapping("/tuits")
-	public List<Tuit> obtenerTuits() {
+	public List<TuitDTO> obtenerTuits() {
 
 		return tuitService.obtenerTodosTuits();
 	}
 
 	@PostMapping("/tuit")
-	public ResponseEntity<Tuit> guardar(@RequestBody Tuit tuit) {
+	public ResponseEntity<TuitDTO> guardar(@RequestBody TuitDTO tuit) {
 
-		Tuit nuevoTuit = this.tuitService.guardar(tuit);
+		TuitDTO nuevoTuit = this.tuitService.guardar(tuit);
 
 		return new ResponseEntity<>(nuevoTuit, HttpStatus.ACCEPTED);
 	}
@@ -48,12 +48,12 @@ public class TuitController {
 
 		return new ResponseEntity<>(estadoTuitEliminado, HttpStatus.ACCEPTED);
 	}
-	
+
 	@GetMapping("/tuits/{id}")
-	public List<Tuit> obtenerTuitsUsuario(@PathVariable int id){
-		
-		return this.tuitService.obtenerTuitsUsuario(id);
-		
+	public List<TuitDTO> obtenerTuitsUsuario(@PathVariable int id) {
+
+		return tuitService.obtenerTuitsUsuario(id);
+
 	}
 
 }
