@@ -24,7 +24,6 @@ public class Like implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "ID_TUIT", nullable = true)
-//	private int idTuit;
 	private Tuit tuit;
 
 	@Column(name = "FLAG_LIKE")

@@ -56,5 +56,11 @@ public class ComentarioController {
 		return comentarioService.obtenerComentarioPorId(id);
 
 	}
+	
+	@GetMapping("/comentario/tuit/{idTuit}")
+	public List<ComentarioDTO> obtenerComentariosTuit(@PathVariable int idTuit){
+		
+		return comentarioService.obtenerComentariosIdTuit(idTuit);
+	}
 
 }

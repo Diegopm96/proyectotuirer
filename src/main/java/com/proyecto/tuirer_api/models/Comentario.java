@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,8 +32,9 @@ public class Comentario implements Serializable {
 	@Column(name = "FECHA_PUBLICACION")
 	private Date fechaPublicacion;
 
-	@Column(name = "ID_USUARIO")
-	private int idUsuario;
+	@ManyToOne()
+	@JoinColumn(name="ID_USUARIO")
+	private Usuario usuario;
 
 	@Column(name = "ID_TUIT_COMENTADO")
 	private int idTuitComentado;
@@ -68,12 +71,14 @@ public class Comentario implements Serializable {
 		this.fechaPublicacion = fechaPublicacion;
 	}
 
-	public int getIdUsuario() {
-		return idUsuario;
+	
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public List<Like> getLikes() {

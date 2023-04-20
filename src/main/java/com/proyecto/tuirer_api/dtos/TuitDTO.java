@@ -8,39 +8,46 @@ public class TuitDTO {
 	private int id;
 	private String contenido;
 	private Date fechaPublicacion;
-	private int idUsuario;
 	private List<LikeDTOSimp> likes;
-	
-	public List<LikeDTOSimp> getLikes() {
-		return likes;
-	}
-	public void setLikes(List<LikeDTOSimp> likes) {
-		this.likes = likes;
-	}
+	private UsuarioDTOSimp usuario;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getContenido() {
 		return contenido;
 	}
+
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
+
 	public Date getFechaPublicacion() {
 		return fechaPublicacion;
 	}
+
 	public void setFechaPublicacion(Date fechaPublicacion) {
 		this.fechaPublicacion = fechaPublicacion;
 	}
-	public int getIdUsuario() {
-		return idUsuario;
+
+	public UsuarioDTOSimp getUsuario() {
+		return usuario;
 	}
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+
+	public void setUsuario(UsuarioDTOSimp usuario) {
+		this.usuario = usuario;
 	}
-	
-	
+	public List<LikeDTOSimp> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<LikeDTOSimp> likes) {
+		this.likes = likes;
+	}
+
 }

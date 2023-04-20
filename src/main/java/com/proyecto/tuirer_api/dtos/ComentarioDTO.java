@@ -8,7 +8,7 @@ public class ComentarioDTO {
 	private int id;
 	private String contenido;
 	private Date fechaPublicacion;
-	private int idUsuario;
+	private UsuarioDTOSimp usuario;
 	private int idTuitComentado;
 	private List<LikeDTOSimp> likes;
 
@@ -44,12 +44,14 @@ public class ComentarioDTO {
 		this.fechaPublicacion = fechaPublicacion;
 	}
 
-	public int getIdUsuario() {
-		return idUsuario;
+	
+
+	public UsuarioDTOSimp getUsuario() {
+		return usuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setUsuario(UsuarioDTOSimp usuario) {
+		this.usuario = usuario;
 	}
 
 	public List<LikeDTOSimp> getLikes() {

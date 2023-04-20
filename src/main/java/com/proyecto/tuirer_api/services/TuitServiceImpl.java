@@ -1,6 +1,7 @@
 package com.proyecto.tuirer_api.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,8 @@ public class TuitServiceImpl implements TuitService {
 	TuitRepository tuitRepository;
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	
+	
 
 	@Override
 	public List<TuitDTO> obtenerTodosTuits() {
@@ -43,7 +46,7 @@ public class TuitServiceImpl implements TuitService {
 	public TuitDTO guardar(TuitDTO tuit) {
 
 		Tuit tuitEnti = ModelMapperUtil.transformDto(tuit, Tuit.class);
-
+		tuitEnti.setFechaPublicacion(new Date());
 		return ModelMapperUtil.transformDto(tuitRepository.save(tuitEnti), TuitDTO.class);
 	}
 

@@ -1,6 +1,7 @@
 package com.proyecto.tuirer_api.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class ComentarioServiceImpl implements ComentarioService {
 	public ComentarioDTO guardar(ComentarioDTO comentario) {
 
 		Comentario comentarioEnti = ModelMapperUtil.transformDto(comentario, Comentario.class);
-
+		comentarioEnti.setFechaPublicacion(new Date());
 		return ModelMapperUtil.transformDto(comentarioRepository.save(comentarioEnti), ComentarioDTO.class);
 	}
 
@@ -58,6 +59,16 @@ public class ComentarioServiceImpl implements ComentarioService {
 			return null;
 		}
 		return comentarioDTO;
+	}
+
+//	terminar metodo
+	@Override
+	public List<ComentarioDTO> obtenerComentariosIdTuit(int idTuit) {
+		
+		
+		
+		List<Comentario> comentariosEnti = comentarioRepository.findByidTuitComentado(idTuit);
+		return ModelMapperUtil.transformDtoList(comentariosEnti, ComentarioDTO.class) ;
 	}
 
 }
