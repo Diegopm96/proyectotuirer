@@ -1,5 +1,6 @@
 package com.proyecto.tuirer_api.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.tuirer_api.dtos.LikeDTO;
+import com.proyecto.tuirer_api.dtos.LikeDTOSimp;
 import com.proyecto.tuirer_api.models.Comentario;
 import com.proyecto.tuirer_api.models.Like;
 import com.proyecto.tuirer_api.models.Tuit;
@@ -36,12 +38,12 @@ public class LikeServiceImpl implements LikeService {
 		Tuit tuit = new Tuit();
 		Like likeEnti = ModelMapperUtil.transformDto(like, Like.class);
 
-		if (null != comentarioRepository.findById(idComentario)) {
+		if (null != comentarioRepository.findById(idComentario).orElse(null)) {
 
 			comentario = comentarioRepository.findById(idComentario).orElse(null);
 			likeEnti.setComentario(comentario);
 
-		} else if (null != tuitRepository.findById(idTuit)) {
+		} else if (null != tuitRepository.findById(idTuit).orElse(null)) {
 
 			tuit = tuitRepository.findById(idTuit).orElse(null);
 			likeEnti.setTuit(tuit);
@@ -68,18 +70,27 @@ public class LikeServiceImpl implements LikeService {
 		this.likeRepository.deleteById(id);
 	}
 
-	@Override
-	public List<Like> obtenerLikeIdTuit(Tuit tuit) {
-
-		return this.likeRepository.findByTuit(tuit);
-
-	}
+	
 
 	@Override
 	public List<Like> obtenerLikeIdComentario(Comentario id) {
 
 		return this.likeRepository.findByComentario(id);
 
+	}
+	
+	@Override
+	public List<LikeDTOSimp> obtenerLikeIdTuit(Tuit id) {
+		
+		List<Like> likes= this.likeRepository.findByTuit(id);
+		List<LikeDTOSimp> likesDTO = new ArrayList<>();
+		if(!likes.isEmpty()) {
+			likesDTO = ModelMapperUtil.transformDtoList(likes, LikeDTOSimp.class);
+			return likesDTO;
+		}
+		
+		return null;
+		
 	}
 
 }

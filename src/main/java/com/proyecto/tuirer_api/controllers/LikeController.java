@@ -18,6 +18,7 @@ import com.proyecto.tuirer_api.dtos.LikeDTO;
 import com.proyecto.tuirer_api.dtos.LikeDTOSimp;
 import com.proyecto.tuirer_api.models.Comentario;
 import com.proyecto.tuirer_api.models.Like;
+import com.proyecto.tuirer_api.models.Tuit;
 import com.proyecto.tuirer_api.services.LikeServiceImpl;
 import com.proyecto.tuirer_api.utils.ModelMapperUtil;
 
@@ -62,16 +63,15 @@ public class LikeController {
 		return likeService.obtenerLikeIdComentario(id);
 
 	}
-
-	
-//	hacer metodos pasandole el objeto 
-	
-	@GetMapping("/likes/tuit/{}")
-	public List<Like> obtenerLikesTuit(@PathVariable int id) {
-
-		return this.obtenerLikesTuit(id);
-
+	@GetMapping("/likes/tuit/{id}")
+	public List<LikeDTOSimp> obtenerLikesTuit(@PathVariable("id") Tuit	 id) {
+		
+		return likeService.obtenerLikeIdTuit(id);
+		
 	}
+
+	
+
 	
 	
 }

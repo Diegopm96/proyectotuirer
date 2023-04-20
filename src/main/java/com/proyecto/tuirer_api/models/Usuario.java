@@ -39,6 +39,8 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Tuit> tuits;
 	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comentario>comentarios;
 	
 	public Usuario() {
 

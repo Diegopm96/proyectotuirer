@@ -1,7 +1,6 @@
 package com.proyecto.tuirer_api.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class Tuit implements Serializable {
 	private Usuario usuario;
 
 	@OneToMany(mappedBy = "tuit", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Like> likes = new ArrayList<>();
+	private List<Like> likes;
 
 	public Tuit() {
 	}
@@ -76,8 +75,6 @@ public class Tuit implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	
 
 }

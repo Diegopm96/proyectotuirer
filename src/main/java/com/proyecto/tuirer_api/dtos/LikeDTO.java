@@ -3,10 +3,10 @@ package com.proyecto.tuirer_api.dtos;
 public class LikeDTO {
 
 	private int id;
-	private int tuit;
-	private boolean flagLike;
-	private int comentario;
 	private int idUsuario;
+	private boolean flagLike;
+	private int tuit;
+	private int comentario;
 
 	public int getId() {
 		return id;

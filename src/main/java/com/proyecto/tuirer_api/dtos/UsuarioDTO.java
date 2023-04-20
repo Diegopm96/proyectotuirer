@@ -11,6 +11,7 @@ public class UsuarioDTO {
 	private String password;
 	private Date fechaRegistro;
 	private List<TuitDTO> tuits;
+	private List<ComentarioDTO>comentarios;
 
 	public int getId() {
 		return id;
@@ -59,5 +60,14 @@ public class UsuarioDTO {
 	public void setNombreUsuario(String nombreUsuario) {
 		this.nombreUsuario = nombreUsuario;
 	}
+
+	public List<ComentarioDTO> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<ComentarioDTO> comentarios) {
+		this.comentarios = comentarios;
+	}
+	
 
 }

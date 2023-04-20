@@ -13,4 +13,6 @@ public interface ComentarioService {
 	public ComentarioDTO guardar(ComentarioDTO comentario);
 	
 	public void eliminar (int id);
+	
+	public List<ComentarioDTO> obtenerComentariosIdTuit(int idTuit);
 }
