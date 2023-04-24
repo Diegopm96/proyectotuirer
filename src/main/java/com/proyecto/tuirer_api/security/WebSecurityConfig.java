@@ -29,19 +29,24 @@ public class WebSecurityConfig {
 		JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
 		jwtAuthenticationFilter.setAuthenticationManager(authManager);
 		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
-		return http.cors().and().csrf().disable().authorizeHttpRequests().anyRequest().authenticated().and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		
+		return http.cors()
+				.and()
+				.csrf()
+				.disable()
+				.authorizeHttpRequests()
+				.anyRequest()
+				.authenticated()
+				.and()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
 				.addFilter(jwtAuthenticationFilter)
-				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class).build();
+				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 
-	/*
-	 * @Bean public UserDetailsService userDetailsService() {
-	 * InMemoryUserDetailsManager manager =new InMemoryUserDetailsManager();
-	 * manager.createUser(User.withUsername("admin")
-	 * .password(passwordEncoder().encode("admin")) .roles() .build()); return
-	 * manager; }
-	 */
+	
 	@Bean
 	AuthenticationManager authManager(HttpSecurity http) throws Exception {
 		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsService)
@@ -52,4 +57,6 @@ public class WebSecurityConfig {
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+
 }

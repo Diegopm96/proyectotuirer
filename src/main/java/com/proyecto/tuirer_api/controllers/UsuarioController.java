@@ -1,11 +1,13 @@
 package com.proyecto.tuirer_api.controllers;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +37,10 @@ public class UsuarioController {
 	@PostMapping("/usuario")
 	public ResponseEntity<Usuario> guardarUsuario(@RequestBody UsuarioDTO usuario) {
 
+		usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
+		usuario.setFechaRegistro(new Date());
 		Usuario nuevoUsuario = usuarioService.guardar(usuario);
+		
 
 		return new ResponseEntity<>(nuevoUsuario, HttpStatus.ACCEPTED);
 	}
@@ -48,19 +53,7 @@ public class UsuarioController {
 		return new ResponseEntity<>(usuario, HttpStatus.ACCEPTED);
 	}
 
-//	@PutMapping("/usuario/{id}")
-//	public ResponseEntity<Usuario> actualizarUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
-//
-//		UsuarioDTO usuarioPorId = usuarioService.obtenerUsuarioPorId(id);
-//		usuarioPorId.setEmail(usuario.getEmail());
-//		usuarioPorId.setFechaRegistro(usuario.getFechaRegistro());
-//		usuarioPorId.setNombreUsuario(usuario.getNombreUsuario());
-//		usuarioPorId.setPassword(usuario.getPassword());
-//
-//		Usuario usuarioActualizado = usuarioService.guardar(usuarioPorId);
-//
-//		return new ResponseEntity<>(usuarioActualizado, HttpStatus.CREATED);
-//	}
+
 
 	@DeleteMapping("/usuario/{id}")
 	public ResponseEntity<HashMap<String, Boolean>> eliminarUsuario(@PathVariable int id) {
