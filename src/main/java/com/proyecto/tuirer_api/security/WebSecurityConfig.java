@@ -12,62 +12,40 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import lombok.AllArgsConstructor;
-
 @Configuration
-@AllArgsConstructor
 public class WebSecurityConfig {
 
-	private  UserDetailsService userDetailsService;
-	private  JWTAuthorizationFilter jwtAuthorizationFilter;
-	
-	
+	private final UserDetailsService userDetailsService;
 
-	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
+	private final JWTAuthorizationFilter jwtAuthorizationFilter;
 
-		JWTAuthenticationFilter jwtAuthentificationFilter = new JWTAuthenticationFilter();
-		jwtAuthentificationFilter.setAuthenticationManager(authManager);
-		jwtAuthentificationFilter.setFilterProcessesUrl("/login");
-
-		return http.csrf()
-				.disable()
-				.authorizeRequests()
-				.anyRequest()
-				.authenticated()
-				.and()
-				.httpBasic()
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.addFilter(jwtAuthentificationFilter)
-				.addFilterBefore(jwtAuthorizationFilter,UsernamePasswordAuthenticationFilter.class)
-				.build();
-
+	public WebSecurityConfig(UserDetailsService userDetailsService, JWTAuthorizationFilter jwtAuthorizationFilter) {
+		this.userDetailsService = userDetailsService;
+		this.jwtAuthorizationFilter = jwtAuthorizationFilter;
 	}
 
-//	@Bean
-//	UserDetailsService userDetailsService() {
-//
-//		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//		manager.createUser(User.withUsername("admin")
-//				.password(passwordEncoder().encode("admin"))
-//				.roles()
-//				.build());
-//		
-//		return manager;
-//		
-//	}
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
+		JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
+		jwtAuthenticationFilter.setAuthenticationManager(authManager);
+		jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+		return http.cors().and().csrf().disable().authorizeHttpRequests().anyRequest().authenticated().and()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+				.addFilter(jwtAuthenticationFilter)
+				.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class).build();
+	}
 
+	/*
+	 * @Bean public UserDetailsService userDetailsService() {
+	 * InMemoryUserDetailsManager manager =new InMemoryUserDetailsManager();
+	 * manager.createUser(User.withUsername("admin")
+	 * .password(passwordEncoder().encode("admin")) .roles() .build()); return
+	 * manager; }
+	 */
 	@Bean
 	AuthenticationManager authManager(HttpSecurity http) throws Exception {
-
-		return http.getSharedObject(AuthenticationManagerBuilder.class)
-				.userDetailsService(userDetailsService)
-				.passwordEncoder(passwordEncoder())
-				.and()
-				.build();
+		return http.getSharedObject(AuthenticationManagerBuilder.class).userDetailsService(userDetailsService)
+				.passwordEncoder(passwordEncoder()).and().build();
 	}
 
 	@Bean
