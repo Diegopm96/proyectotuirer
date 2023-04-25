@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.tuirer_api.dtos.UsuarioDTO;
 import com.proyecto.tuirer_api.models.Usuario;
-import com.proyecto.tuirer_api.services.UsuarioServiceImpl;
+import com.proyecto.tuirer_api.services.UsuarioService;
 
 @RestController
 @RequestMapping("/api")
 public class UsuarioController {
 
 	@Autowired
-	UsuarioServiceImpl usuarioService;
+	UsuarioService usuarioService;
 
 	@GetMapping("/usuarios")
 	public List<UsuarioDTO> obtenerUsuarios() {
