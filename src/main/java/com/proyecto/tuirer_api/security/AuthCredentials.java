@@ -3,16 +3,16 @@ package com.proyecto.tuirer_api.security;
 
 public class AuthCredentials {
 
-	private String email;
+	private String nombreUsuario;
 	private String password;
 	
 	
 	
-	public String getEmail() {
-		return email;
+	public String getNombreUsuario() {
+		return nombreUsuario;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void nombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
 	}
 	public String getPassword() {
 		return password;

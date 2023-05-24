@@ -11,5 +11,6 @@ import com.proyecto.tuirer_api.models.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario,Integer> {
 
 	Optional<Usuario> findOneByEmail(String email);
+	Optional<Usuario> findOneByNombreUsuario(String nombreUsuario);
 	
 }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.tuirer_api.dtos.UsuarioDTO;
-import com.proyecto.tuirer_api.models.Usuario;
 import com.proyecto.tuirer_api.services.UsuarioService;
 
 @RestController
@@ -35,12 +34,11 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/usuario")
-	public ResponseEntity<Usuario> guardarUsuario(@RequestBody UsuarioDTO usuario) {
+	public ResponseEntity<UsuarioDTO> guardarUsuario(@RequestBody UsuarioDTO usuario) {
 
 		usuario.setPassword(new BCryptPasswordEncoder().encode(usuario.getPassword()));
 		usuario.setFechaRegistro(new Date());
-		Usuario nuevoUsuario = usuarioService.guardar(usuario);
-		
+		UsuarioDTO nuevoUsuario = usuarioService.guardar(usuario);
 
 		return new ResponseEntity<>(nuevoUsuario, HttpStatus.ACCEPTED);
 	}
@@ -53,12 +51,10 @@ public class UsuarioController {
 		return new ResponseEntity<>(usuario, HttpStatus.ACCEPTED);
 	}
 
-
-
 	@DeleteMapping("/usuario/{id}")
 	public ResponseEntity<HashMap<String, Boolean>> eliminarUsuario(@PathVariable int id) {
 
-		this.usuarioService.eliminarUsuario(id);
+		usuarioService.eliminarUsuario(id);
 		HashMap<String, Boolean> estadoUsuarioEliminado = new HashMap<>();
 
 		estadoUsuarioEliminado.put("Eliminado", true);
@@ -66,4 +62,33 @@ public class UsuarioController {
 		return new ResponseEntity<>(estadoUsuarioEliminado, HttpStatus.ACCEPTED);
 	}
 
+	@GetMapping("/usuario/email/{email}")
+	public ResponseEntity<UsuarioDTO> obtenerUsuarioId(@PathVariable String email) {
+
+		UsuarioDTO usuario = usuarioService.obtenerUsuarioEmail(email);
+
+		return new ResponseEntity<>(usuario, HttpStatus.ACCEPTED);
+
+	}
+	
+	@GetMapping("/usuarioExiste/{usuario}")
+	public boolean existeUsuario(@PathVariable String usuario) {
+		
+		return usuarioService.existeUsuario(usuario);
+	}
+
+	@GetMapping("/emailExiste/{email}")
+	public boolean existeEmail(@PathVariable String email) {
+		
+		return usuarioService.existeEmail(email);
+	}
+	
+	@GetMapping("/usuario/nombre/{nombreUsuario}")
+	public ResponseEntity<UsuarioDTO> obtenerUsuarioIdNombreUsuario(@PathVariable String nombreUsuario ) {
+
+		UsuarioDTO usuario = usuarioService.obtenerUsuarioNombreUsuario(nombreUsuario);
+
+		return new ResponseEntity<>(usuario, HttpStatus.ACCEPTED);
+
+	}
 }

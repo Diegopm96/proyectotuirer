@@ -29,28 +29,28 @@ public class LikeServiceImpl implements LikeService {
 	@Autowired
 	TuitRepository tuitRepository;
 
-	@Override
-	public Like guardarLike(LikeDTO like) {
-
-		int idComentario = like.getComentario();
-		int idTuit = like.getTuit();
-		Comentario comentario = new Comentario();
-		Tuit tuit = new Tuit();
-		Like likeEnti = ModelMapperUtil.transformDto(like, Like.class);
-
-		if (null != comentarioRepository.findById(idComentario).orElse(null)) {
-
-			comentario = comentarioRepository.findById(idComentario).orElse(null);
-			likeEnti.setComentario(comentario);
-
-		} else if (null != tuitRepository.findById(idTuit).orElse(null)) {
-
-			tuit = tuitRepository.findById(idTuit).orElse(null);
-			likeEnti.setTuit(tuit);
-		}
-
-		return likeRepository.save(likeEnti);
-	}
+//	@Override
+//	public Like guardarLike(LikeDTO like) {
+//
+//		int idComentario = like.getComentario();
+//		int idTuit = like.getTuit();
+//		Comentario comentario = new Comentario();
+//		Tuit tuit = new Tuit();
+//		Like likeEnti = ModelMapperUtil.transformDto(like, Like.class);
+//
+//		if (null != comentarioRepository.findById(idComentario).orElse(null)) {
+//
+//			comentario = comentarioRepository.findById(idComentario).orElse(null);
+//			likeEnti.setComentario(comentario);
+//
+//		} else if (null != tuitRepository.findById(idTuit).orElse(null)) {
+//
+//			tuit = tuitRepository.findById(idTuit).orElse(null);
+//			likeEnti.setTuit(tuit);
+//		}
+//
+//		return likeRepository.save(likeEnti);
+//	}
 
 	@Override
 	public LikeDTO obtenerLikePorId(int idLike) {
@@ -91,6 +91,29 @@ public class LikeServiceImpl implements LikeService {
 		
 		return null;
 		
+	}
+
+	@Override
+	public Like guardarLike(LikeDTO like) {
+		
+		Like likeEnty = ModelMapperUtil.transformDto(like, Like.class);
+		
+		
+		if(like.getComentario()!=null ) {
+			int idComentario = like.getComentario().getId();
+			Comentario comentario = comentarioRepository.findById(idComentario).orElse(null);
+			
+			likeEnty.setComentario(comentario);
+			
+		}
+		if(like.getTuit()!=null) {
+			int idTuit = like.getTuit().getId();
+			Tuit tuit = tuitRepository.findById(idTuit).orElse(null);	
+			likeEnty.setTuit(tuit);
+		}
+		
+		
+		return likeRepository.save(likeEnty);
 	}
 
 }

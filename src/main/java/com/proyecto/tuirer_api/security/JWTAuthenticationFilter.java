@@ -34,7 +34,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		}
 		
 		UsernamePasswordAuthenticationToken usernamePAT= new UsernamePasswordAuthenticationToken(
-				authCredentials.getEmail(),
+				authCredentials.getNombreUsuario(),
 				authCredentials.getPassword(),
 				Collections.emptyList()
 				);

@@ -31,10 +31,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public Usuario guardar(UsuarioDTO usuario) {
+	public UsuarioDTO guardar(UsuarioDTO usuario) {
 
-		Usuario usuarioEnti = ModelMapperUtil.transformDto(usuario, Usuario.class);
-		return usuarioRepository.save(usuarioEnti);
+		Usuario usuarioEnti =usuarioRepository.save(ModelMapperUtil.transformDto(usuario, Usuario.class));
+		;
+		
+		return ModelMapperUtil.transformDto(usuarioEnti, UsuarioDTO.class);
 	}
 
 	@Override
@@ -55,7 +57,55 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		usuarioRepository.deleteById(id);
 	}
-	
-	
+
+	@Override
+	public UsuarioDTO obtenerUsuarioEmail(String email) {
+		Usuario usuarioEnti = usuarioRepository.findOneByEmail(email).orElse(null);
+		if (null != usuarioEnti) {
+
+			return ModelMapperUtil.transformDto(usuarioEnti, UsuarioDTO.class);
+		}
+		return null;
+	}
+
+	@Override
+	public boolean existeUsuario(String usuario) {
+
+		List<Usuario> usuarios = usuarioRepository.findAll();
+
+		List<String> nombreUsuarios = new ArrayList<>();
+
+		for (Usuario usu : usuarios) {
+
+			nombreUsuarios.add(usu.getNombreUsuario());
+		}
+
+		return nombreUsuarios.contains(usuario);
+	}
+
+	@Override
+	public boolean existeEmail(String email) {
+		List<Usuario> usuarios = usuarioRepository.findAll();
+
+		List<String> emails = new ArrayList<>();
+
+		for (Usuario usu : usuarios) {
+
+			emails.add(usu.getEmail());
+		}
+
+		return emails.contains(email);
+	}
+
+	@Override
+	public UsuarioDTO obtenerUsuarioNombreUsuario(String nombreUsuario) {
+		Usuario usuarioEnti = usuarioRepository.findOneByNombreUsuario(nombreUsuario).orElse(null);
+		
+		if (null != usuarioEnti) {
+
+			return ModelMapperUtil.transformDto(usuarioEnti, UsuarioDTO.class);
+		}
+		return null;
+	}
 
 }
