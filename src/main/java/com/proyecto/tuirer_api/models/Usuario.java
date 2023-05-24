@@ -2,14 +2,20 @@ package com.proyecto.tuirer_api.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -38,10 +44,43 @@ public class Usuario implements Serializable {
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Tuit> tuits;
-	
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Comentario>comentarios;
-	
+	private List<Comentario> comentarios;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "seguimiento", joinColumns = @JoinColumn(name = "ID_USUARIO_SEGUIDOR"), inverseJoinColumns = @JoinColumn(name = "ID_USUARIO_SEGUIDO"))
+	private Set<Usuario> siguiendo = new HashSet<>();
+
+	@ManyToMany(mappedBy = "siguiendo", fetch = FetchType.LAZY)
+	private Set<Usuario> seguidores = new HashSet<>();
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public Set<Usuario> getSiguiendo() {
+		return siguiendo;
+	}
+
+	public void setSiguiendo(Set<Usuario> siguiendo) {
+		this.siguiendo = siguiendo;
+	}
+
+
+
+	public Set<Usuario> getSeguidores() {
+		return seguidores;
+	}
+
+	public void setSeguidores(Set<Usuario> seguidores) {
+		this.seguidores = seguidores;
+	}
+
 	public Usuario() {
 
 	}
@@ -98,4 +137,15 @@ public class Usuario implements Serializable {
 		return serialVersionUID;
 	}
 
+	public void seguir(Usuario usuario) {
+
+		this.siguiendo.add(usuario);
+		usuario.getSeguidores().add(usuario);
+	}
+	
+	public void dejarSeguir(Usuario usuario) {
+		this.siguiendo.remove(usuario);
+		usuario.getSeguidores().remove(usuario);
+	}
+	
 }

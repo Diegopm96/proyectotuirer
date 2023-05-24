@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proyecto.tuirer_api.dtos.UsuarioDTO;
+import com.proyecto.tuirer_api.dtos.UsuarioDTOSimp;
 import com.proyecto.tuirer_api.models.Usuario;
 import com.proyecto.tuirer_api.repositories.UsuarioRepository;
 import com.proyecto.tuirer_api.utils.ModelMapperUtil;
@@ -106,6 +107,42 @@ public class UsuarioServiceImpl implements UsuarioService {
 			return ModelMapperUtil.transformDto(usuarioEnti, UsuarioDTO.class);
 		}
 		return null;
+	}
+
+	@Override
+	public void seguirUsuario(int idSeguidor, int idSeguido) {
+		
+		Usuario seguidor = usuarioRepository.findById(idSeguidor).orElse(null);
+		
+		Usuario seguido = usuarioRepository.findById(idSeguido).orElse(null);
+		
+		seguidor.seguir(seguido);
+		usuarioRepository.save(seguidor);
+	}
+	
+
+	@Override
+	public void dejarDeSeguir(int idSeguidor, int idSeguido) {
+		
+		Usuario seguidor = usuarioRepository.findById(idSeguidor).orElse(null);
+		
+		Usuario seguido = usuarioRepository.findById(idSeguido).orElse(null);
+		
+		seguidor.dejarSeguir(seguido);
+		usuarioRepository.save(seguidor);
+		
+	}
+
+	@Override
+	public List<UsuarioDTOSimp> obtenerUsuariosDto() {
+		
+		List<Usuario> usuarios = usuarioRepository.findAll();
+		List<UsuarioDTOSimp> usuariosDTO = new ArrayList<>();
+		if (!usuarios.isEmpty()) {
+
+			usuariosDTO = ModelMapperUtil.transformDtoList(usuarios, UsuarioDTOSimp.class);
+		}
+		return usuariosDTO;
 	}
 
 }

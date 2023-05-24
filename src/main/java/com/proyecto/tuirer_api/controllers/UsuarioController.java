@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto.tuirer_api.dtos.UsuarioDTO;
+import com.proyecto.tuirer_api.dtos.UsuarioDTOSimp;
 import com.proyecto.tuirer_api.services.UsuarioService;
 
 @RestController
@@ -91,4 +92,27 @@ public class UsuarioController {
 		return new ResponseEntity<>(usuario, HttpStatus.ACCEPTED);
 
 	}
+	
+	@GetMapping("/usuario/follow/{idSeguido}/{idSeguidor}")
+	public ResponseEntity<String> seguirUsuario(@PathVariable int idSeguido, @PathVariable int idSeguidor){
+		
+		usuarioService.seguirUsuario(idSeguidor, idSeguido);
+		
+		return  ResponseEntity.ok("Usuario seguido con exito");
+	}
+	
+	@GetMapping("/usuario/unfollow/{idSeguido}/{idSeguidor}")
+	public ResponseEntity<String> dejarDeSeguirUsuario(@PathVariable int idSeguido, @PathVariable int idSeguidor){
+		
+		usuarioService.dejarDeSeguir(idSeguidor, idSeguido);
+		
+		return  ResponseEntity.ok("Usuario dejado de seguir con exito");
+	}
+	
+	@GetMapping("/usuariosDto")
+	public List<UsuarioDTOSimp> obtenerUsuariosDto() {
+
+		return usuarioService.obtenerUsuariosDto();
+
+	} 
 }

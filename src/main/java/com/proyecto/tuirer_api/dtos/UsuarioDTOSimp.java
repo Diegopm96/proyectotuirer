@@ -6,11 +6,11 @@ public class UsuarioDTOSimp {
 
 	private int id;
 	private String email;
-	
+
 	private String nombreUsuario;
-	
+
 	private String password;
-	
+
 	private Date fechaRegistro;
 
 	public String getEmail() {
@@ -29,20 +29,12 @@ public class UsuarioDTOSimp {
 		this.nombreUsuario = nombreUsuario;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Date getFechaRegistro() {
@@ -52,7 +44,5 @@ public class UsuarioDTOSimp {
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
-	
-	
-	
+
 }
