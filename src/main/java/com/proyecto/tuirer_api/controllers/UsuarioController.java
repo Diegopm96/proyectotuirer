@@ -115,4 +115,12 @@ public class UsuarioController {
 		return usuarioService.obtenerUsuariosDto();
 
 	} 
+	
+	@GetMapping("usuario/seguidosId/{idUsuario}")
+	public List<Integer> seguidoresId(@PathVariable int idUsuario){
+		
+		
+		
+		return usuarioService.obtenerIdSeguidos(idUsuario);
+	}
 }

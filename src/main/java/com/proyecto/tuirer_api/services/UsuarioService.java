@@ -29,6 +29,8 @@ public interface UsuarioService {
 	
 	public List<UsuarioDTOSimp> obtenerUsuariosDto();
 	
+	public List<Integer> obtenerIdSeguidos(int idUsuario);
+	
 //	public Usuario modificarUsuario(int id,Usuario usuario);
 	
 	
