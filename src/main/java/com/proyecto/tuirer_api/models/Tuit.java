@@ -32,10 +32,26 @@ public class Tuit implements Serializable {
 	@Column(name = "FECHA_PUBLICACION")
 	private Date fechaPublicacion;
 
-//	@Column(name = "ID_USUARIO")
+
 	@ManyToOne()
 	@JoinColumn(name="ID_USUARIO")
 	private Usuario usuario;
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public List<Like> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<Like> likes) {
+		this.likes = likes;
+	}
 
 	@OneToMany(mappedBy = "tuit", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Like> likes;

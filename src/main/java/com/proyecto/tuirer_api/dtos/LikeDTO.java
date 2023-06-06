@@ -1,55 +1,45 @@
 package com.proyecto.tuirer_api.dtos;
 
+import com.proyecto.tuirer_api.models.Usuario;
+
 public class LikeDTO {
 
 	private int id;
-	private int idUsuario;
+	private Usuario usuario;
 	private boolean flagLike;
-	private int tuit;
-	private int comentario;
-
+	private TuitDTO tuit;
+	private ComentarioDTO comentario;
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	
-
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	public boolean isFlagLike() {
 		return flagLike;
 	}
-
 	public void setFlagLike(boolean flagLike) {
 		this.flagLike = flagLike;
 	}
-
-	
-
-	public int getTuit() {
+	public TuitDTO getTuit() {
 		return tuit;
 	}
-
-	public void setTuit(int tuit) {
+	public void setTuit(TuitDTO tuit) {
 		this.tuit = tuit;
 	}
-
-	public int getComentario() {
+	public ComentarioDTO getComentario() {
 		return comentario;
 	}
-
-	public void setComentario(int comentario) {
+	public void setComentario(ComentarioDTO comentario) {
 		this.comentario = comentario;
 	}
 
-	public int getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
+	
 
 }

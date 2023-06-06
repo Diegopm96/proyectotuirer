@@ -2,6 +2,7 @@ package com.proyecto.tuirer_api.dtos;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class UsuarioDTO {
 
@@ -12,6 +13,24 @@ public class UsuarioDTO {
 	private Date fechaRegistro;
 	private List<TuitDTO> tuits;
 	private List<ComentarioDTO>comentarios;
+	private Set<UsuarioDTOSimp> siguiendo;
+	private Set<UsuarioDTOSimp> seguidores;
+
+	public Set<UsuarioDTOSimp> getSiguiendo() {
+		return siguiendo;
+	}
+
+	public void setSiguiendo(Set<UsuarioDTOSimp> siguiendo) {
+		this.siguiendo = siguiendo;
+	}
+
+	public Set<UsuarioDTOSimp> getSeguidores() {
+		return seguidores;
+	}
+
+	public void setSeguidores(Set<UsuarioDTOSimp> seguidores) {
+		this.seguidores = seguidores;
+	}
 
 	public int getId() {
 		return id;

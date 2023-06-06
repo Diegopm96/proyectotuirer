@@ -8,10 +8,12 @@ import org.springframework.stereotype.Repository;
 import com.proyecto.tuirer_api.models.Comentario;
 import com.proyecto.tuirer_api.models.Like;
 import com.proyecto.tuirer_api.models.Tuit;
-@Repository
-public interface LikeRepository extends JpaRepository<Like,Integer> {
 
-	List<Like>findByComentario(Comentario comentario);
+@Repository
+public interface LikeRepository extends JpaRepository<Like, Integer> {
+
+	List<Like> findByComentario(Comentario comentario);
+
+	List<Like> findByTuit(Tuit tuit);
 	
-	List<Like>findByTuit(Tuit tuit);
 }
