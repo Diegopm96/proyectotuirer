@@ -12,10 +12,8 @@ import com.proyecto.tuirer_api.models.Tuit;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Integer> {
 
-//	@Query("SELECT  FROM likes  WHERE ID_USUARIO = :idUsuario AND ID_TUIT = :idTuit")
-//	LikeDTO buscarLikePorUsuarioYTuit(@Param("idUsuario") int idUsuario, @Param("idTuit") int idTuit);
-
 	List<Like> findByComentario(Comentario comentario);
 
 	List<Like> findByTuit(Tuit tuit);
+	
 }
