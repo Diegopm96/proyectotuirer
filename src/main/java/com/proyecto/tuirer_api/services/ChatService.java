@@ -8,7 +8,7 @@ public interface ChatService {
 
 	public ChatDTO guardarChat(int idEmisor, int idReceptor);
 	
-	public List<ChatDTO> obtenerChatsEmisor(int idEmisor);
+	public List<ChatDTO> obtenerChats(int idEmisor);
 	
 	public ChatDTO obtenerChat(int idChat);
 }

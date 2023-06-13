@@ -43,14 +43,18 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<ChatDTO> obtenerChatsEmisor(int idEmisor) {
+	public List<ChatDTO> obtenerChats(int idEmisor) {
 
 		Usuario usuario = usuarioRepository.findById(idEmisor).orElse(null);
 
 		if (null != usuario) {
 
 			List<Chat> chats = chatRepository.findAllByUsuarioEmisor(usuario);
-
+			List<Chat> chats2 = chatRepository.findAllByUsuarioReceptor(usuario);
+			if(!chats2.isEmpty()) {
+				
+				chats.addAll(chats2);
+			}
 			return ModelMapperUtil.transformDtoList(chats, ChatDTO.class);
 		}
 
